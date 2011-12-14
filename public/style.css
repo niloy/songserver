@@ -1,0 +1,5 @@
+#medialist li{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
