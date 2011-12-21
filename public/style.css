@@ -2,6 +2,13 @@
     color: blue;
     text-decoration: underline;
     cursor: pointer;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+
+#medialist li:hover{
+    background-color: #777;
+    color: black;
 }
 
 #playlist .path{
