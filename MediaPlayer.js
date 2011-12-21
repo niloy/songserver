@@ -12,7 +12,8 @@ MediaPlayer.prototype.play = function(path, playingCompleteCallback){
         this.isPlaying = true;
         var command = "mplayer '" + path + "'";
         var t = this;
-        exec(command, function(err, stdout, stderr){
+        exec(command, {maxBuffer: 1024 * 1024}, function(err, stdout, stderr){
+            if (err) console.log(err);
             t.isPlaying = false;
             playingCompleteCallback();
         });
