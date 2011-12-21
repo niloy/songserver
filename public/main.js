@@ -34,7 +34,8 @@ $(function(){
     function updateMedialist(medialist){
         $("#medialist").empty();        
         if (medialist.length === 0){
-            $("<li>").text("Medialist is empty").appendTo("#medialist");
+            $("<div>").html("Medialist is empty, place some songs in the 'media' folder")
+                .appendTo("#medialist");
         }else{
             for (var i = 0; i < medialist.length; i++){
                 (function(song){
