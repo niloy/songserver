@@ -3,3 +3,15 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+#playlist .path{
+    color: red;
+}
+
+#playlist .ip{
+    color: green;
+}
+
+#playlist .date{
+    color: blue;
+}

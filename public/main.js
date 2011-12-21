@@ -21,7 +21,12 @@ $(function(){
             $("<li>").text("Playlist is empty").appendTo("#playlist");
         }else{
             for (var i = 0; i < playlist.length; i++){
-                $("<li>").text(playlist[i].path).appendTo("#playlist");
+                var song = playlist[i];
+                var date = new Date(song.addedOn);
+                var text = '<span class="path">' + song.path + '</span> - '
+                            + '<span class="ip">' + song.addedByIP + '</span> - '
+                            + '<span class="date">' + date.toTimeString() + '</span>';
+                $("<li>").html(text).appendTo("#playlist");
             }
         }
     }
