@@ -10,7 +10,7 @@ function MediaPlayer(){
 MediaPlayer.prototype.play = function(path, playingCompleteCallback){
     if (!this.isPlaying){
         this.isPlaying = true;
-        var command = "mplayer '" + path + "'";
+        var command = "mplayer -novideo '" + path + "'";
         var t = this;
         exec(command, {maxBuffer: 1024 * 1024}, function(err, stdout, stderr){
             if (err) console.log(err);
