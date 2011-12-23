@@ -22,3 +22,15 @@
 #playlist .date{
     color: blue;
 }
+
+form{
+    border: 1px solid black;
+    width: 350px;
+    padding: 10px;
+    box-shadow: 0 0 5px 5px #ddd;
+}
+
+form legend{
+    font-size: 1.2em;
+    font-weight: bold;
+}

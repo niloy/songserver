@@ -11,9 +11,9 @@ $(function(){
         updateMedialist(medialist);
     });
     
-    socket.on('playlist updated', function(playlist){
-        updatePlaylist(playlist);
-    });
+    socket.on('playlist updated', updatePlaylist);
+    
+    socket.on('medialist updated', updateMedialist);
     
     function updatePlaylist(playlist){
         $("#playlist").empty();
@@ -46,4 +46,17 @@ $(function(){
             }
         }
     }
+    
+    $("#fileUpload").submit(function(event){
+        event.preventDefault();
+        var formData = new FormData(document.getElementById("fileUpload"));
+        var xhr = new XMLHttpRequest;
+        xhr.open("post", "upload");
+        xhr.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200){
+                alert('upload complete');
+            }
+        };
+        xhr.send(formData);
+    });
 });
