@@ -49,12 +49,18 @@ $(function(){
     
     $("#fileUpload").submit(function(event){
         event.preventDefault();
-        var formData = new FormData(document.getElementById("fileUpload"));
+        $("#upload").fadeOut();
+        var files = document.getElementById("uploadFile").files;
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++){
+            formData.append("file" + i, files[i]);
+        }
         var xhr = new XMLHttpRequest;
         xhr.open("post", "upload");
         xhr.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200){
                 alert('upload complete');
+                $("#upload").fadeIn();
             }
         };
         xhr.send(formData);
