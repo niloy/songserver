@@ -40,12 +40,16 @@ websock.sockets.on('connection', function(socket){
     });
 
     socket.on('song selected', function(song){
-        playlist.addSong(song, 'local', socket.handshake.address.address);
-        if (playlist.list.length === 1){
-            playlist.play();
+        var time = playlist.addSong(song, 'local', socket.handshake.address.address);
+        if (time === 0){
+            if (playlist.list.length === 1){
+                playlist.play();
+            }
+            socket.broadcast.emit('playlist updated', playlist.list);
+            socket.emit('playlist updated', playlist.list);
+        }else{
+            socket.emit('wait for song add', time);
         }
-        socket.broadcast.emit('playlist updated', playlist.list);
-        socket.emit('playlist updated', playlist.list);
     });
 });
 
