@@ -61,6 +61,13 @@ $(function(){
             if (this.readyState == 4 && this.status == 200){
                 alert('upload complete');
                 $("#upload").fadeIn();
+                document.getElementById("uploadProgress").value = 0;
+            }
+        };
+        xhr.upload.onprogress = function(e){
+            if (e.lengthComputable){
+                var percent = Math.floor((e.loaded / e.total) * 100);
+                document.getElementById("uploadProgress").value = percent;
             }
         };
         xhr.send(formData);

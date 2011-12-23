@@ -34,3 +34,8 @@ form legend{
     font-size: 1.2em;
     font-weight: bold;
 }
+
+#uploadProgress{
+    width: 100%;
+    border: 1px solid black;
+}
