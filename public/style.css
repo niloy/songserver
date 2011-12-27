@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'Overlock';
+    src: url(OverlockSC-Regular.ttf);
+}
+
+body{
+    font-family: 'Overlock';
+}
+
 #medialist li{
     color: blue;
     text-decoration: underline;
@@ -38,4 +47,17 @@ form legend{
 #uploadProgress{
     width: 100%;
     border: 1px solid black;
+}
+
+#about h2{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    margin: 0;
+}
+
+#about .content{
+    display: none;
+    box-shadow: inset 0 0 5px 5px gold;
+    padding: 10px;
 }

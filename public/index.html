@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <title>Song Server</title>
         <link rel="stylesheet" href="style.css" />
         <script src="/socket.io/socket.io.js"></script>
@@ -9,6 +11,26 @@
     </head>
     <body>
         <h1>Welcome to the Song Server</h1>
+        
+        <div id="about">
+            <h2>About</h2>
+            <div class="content">
+                <p>Pick a song from the Medialist to queue it in the Playlist.</p>
+                <p>The source code is avaliable on 
+                    <a href="https://github.com/niloy/songserver">Github</a></p>
+                <p>This project uses the following amazing techs:</p>
+                <ul>
+                    <li><a href="http://nodejs.org/">NodeJS</a> 
+                    Server side Javascript. The server is written is JS as well.</li>
+                    <li><a href="http://socket.io/">Websockets</a> Notice the Media 
+                    and Playlist are updated in Real Time</li>
+                    <li><a href="http://www.mplayerhq.hu/design7/news.html">mplayer</a> 
+                        Command-line media player</a>
+                    <li>Linux</li>
+                    <li>HTML5</li>
+                </ul>
+            </div>
+        </div>
         
         <h2>Playlist</h2>
         <ol id="playlist">
