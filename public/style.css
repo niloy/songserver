@@ -7,7 +7,7 @@ body{
     font-family: 'Overlock';
 }
 
-#medialist li{
+#medialist li span{
     color: blue;
     text-decoration: underline;
     cursor: pointer;
@@ -15,7 +15,7 @@ body{
     -moz-transition: all 0.5s;
 }
 
-#medialist li:hover{
+#medialist li span:hover{
     background-color: #777;
     color: black;
 }
@@ -49,7 +49,7 @@ form legend{
     border: 1px solid black;
 }
 
-#about h2{
+#about h2 span{
     color: blue;
     text-decoration: underline;
     cursor: pointer;

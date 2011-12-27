@@ -43,9 +43,10 @@ $(function(){
         }else{
             for (var i = 0; i < medialist.length; i++){
                 (function(song){
-                    $("<li>").text(medialist[i]).appendTo("#medialist").click(function(){
+                    var li = $("<li>").appendTo("#medialist");
+                    $("<span>").text(medialist[i]).click(function(){
                         socket.emit('song selected', song);
-                    });
+                    }).appendTo(li);
                 })(medialist[i]);
             }
         }
@@ -77,7 +78,7 @@ $(function(){
         xhr.send(formData);
     });
     
-    $("#about").click(function(){
+    $("#about span").click(function(){
         $("#about .content").slideToggle();
     });
 });
