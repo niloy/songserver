@@ -10,42 +10,46 @@
         <script src="main.js"></script>
     </head>
     <body>
-        <h1>Welcome to the Song Server</h1>
-        
-        <div id="about">
-            <h2><span>About<span></h2>
-            <div class="content">
-                <p>Pick a song from the Medialist to queue it in the Playlist.</p>
-                <p>The source code is avaliable on 
-                    <a href="https://github.com/niloy/songserver">Github</a></p>
-                <p>This project uses the following amazing techs:</p>
-                <ul>
-                    <li><a href="http://nodejs.org/">NodeJS</a> 
-                    Server side Javascript. The server is written is JS as well.</li>
-                    <li><a href="http://socket.io/">Websockets</a> Notice the Media 
-                    and Playlist are updated in Real Time</li>
-                    <li><a href="http://www.mplayerhq.hu/design7/news.html">mplayer</a> 
-                        Command-line media player</a>
-                    <li>Linux</li>
-                    <li>HTML5</li>
-                </ul>
+        <div class="leftSide">
+            <h1>Welcome to the Song Server</h1>
+            
+            <div id="about">
+                <h2><span>About<span></h2>
+                <div class="content">
+                    <p>Pick a song from the Medialist to queue it in the Playlist.</p>
+                    <p>The source code is avaliable on 
+                        <a href="https://github.com/niloy/songserver">Github</a></p>
+                    <p>This project uses the following amazing techs:</p>
+                    <ul>
+                        <li><a href="http://nodejs.org/">NodeJS</a> 
+                        Server side Javascript. The server is written is JS as well.</li>
+                        <li><a href="http://socket.io/">Websockets</a> Notice the Media 
+                        and Playlist are updated in Real Time</li>
+                        <li><a href="http://www.mplayerhq.hu/design7/news.html">mplayer</a> 
+                            Command-line media player</a>
+                        <li>Linux</li>
+                        <li>HTML5</li>
+                    </ul>
+                </div>
             </div>
+            
+            <h2>Playlist</h2>
+            <ol id="playlist">
+            </ol>
+        
+            <form id="fileUpload" method="POST" action="upload" enctype="multipart/form-data">
+                <legend>Upload a song (multiple selection is allowed)</legend>
+                <input type="file" name="uploadFile" multiple id="uploadFile" />
+                <input type="submit" value="Upload" id="upload" />
+                <progress id="uploadProgress" max="100" value="0"></progress>
+            </form>
         </div>
         
-        <h2>Playlist</h2>
-        <ol id="playlist">
-        </ol>
-        
-        <form id="fileUpload" method="POST" action="upload" enctype="multipart/form-data">
-            <legend>Upload a song (multiple selection is allowed)</legend>
-            <input type="file" name="uploadFile" multiple id="uploadFile" />
-            <input type="submit" value="Upload" id="upload" />
-            <progress id="uploadProgress" max="100" value="0"></progress>
-        </form>
-        
-        <h2>Medialist</h2>
-        <ul id="medialist">
-        </ul>
+        <div class="rightSide">
+            <h2>Medialist</h2>
+            <ul id="medialist">
+            </ul>
+        </div>
     </body>
 </html>
 
