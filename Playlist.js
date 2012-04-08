@@ -55,8 +55,12 @@ Playlist.prototype.getCurrentSong = function(){
     return this.currentlyPlaying;
 };
 
-Playlist.prototype.removeSong = function(){
-    return this.list.shift();
+Playlist.prototype.removeSong = function(songIndex){
+    if (songIndex === 0) {
+        this.mediaPlayer.stop();
+    } else {
+        this.list.splice(songIndex, 1);
+    }
 };
 
 Playlist.prototype.play = function(){
@@ -65,7 +69,7 @@ Playlist.prototype.play = function(){
         this.currentlyPlaying = this.list[0];
         var t = this;
         this.mediaPlayer.play('./media/' + this.currentlyPlaying.path, function(){
-            t.removeSong();
+            t.list.shift();
             t.isPlaying = false;
             t.onCurrentSongComplete();
             t.play();

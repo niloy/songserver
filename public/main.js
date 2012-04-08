@@ -19,6 +19,10 @@ $(function(){
         alert('Please wait ' + time + ' seconds before adding next song');
     });
     
+    socket.on('message', function(message) {
+        alert(message);
+    });
+    
     function updatePlaylist(playlist){
         $("#playlist").empty();
         if (playlist.length === 0){
@@ -26,11 +30,14 @@ $(function(){
         }else{
             for (var i = 0; i < playlist.length; i++){
                 var song = playlist[i];
-                var date = new Date(song.addedOn);
                 var text = '<span class="path">' + song.path + '</span> - '
-                            + '<span class="ip">' + song.addedByIP + '</span> - '
-                            + '<span class="date">' + date.toTimeString() + '</span>';
-                $("<li>").html(text).appendTo("#playlist");
+                            + '<span class="ip">' + song.addedByIP + '</span>';
+                var li = $("<li>").html(text).appendTo("#playlist");
+                $("<button>").text("Remove").click(function(songIndex) {
+                    return function() {
+                        removeSong(songIndex);
+                    };
+                }(i)).appendTo(li);
             }
         }
     }
@@ -50,6 +57,10 @@ $(function(){
                 })(medialist[i]);
             }
         }
+    }
+    
+    function removeSong(songIndex) {
+        socket.emit('song removed', songIndex);
     }
     
     $("#fileUpload").submit(function(event){

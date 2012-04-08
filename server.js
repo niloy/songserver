@@ -51,6 +51,19 @@ websock.sockets.on('connection', function(socket){
             socket.emit('wait for song add', time);
         }
     });
+    
+    socket.on('song removed', function(songIndex) {
+        var ip = socket.handshake.address.address;
+        
+        if (ip === playlist.list[songIndex].addedByIP) {
+            playlist.removeSong(songIndex);
+            websock.sockets.in('users').emit('playlist updated', playlist.list);
+        } else {
+            socket.emit('message', 'Sorry, you can only remove your own songs. \
+Yeh I know the ideal thing would be to not show the remove button, but that \
+requires too much effort, I am too lazy, this works!');
+        }
+    });
 });
 
 playlist.onCurrentSongComplete = function(){
