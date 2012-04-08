@@ -39,8 +39,12 @@ websock.sockets.on('connection', function(socket){
         medialist: medialist.list,
     });
 
-    socket.on('song selected', function(song){
-        var ret = playlist.addSong(song, 'local', socket.handshake.address.address);
+    socket.on('song selected', function(data){
+        var song = data.song;
+        var username = data.username;
+        var ip = socket.handshake.address.address;
+        var ret = playlist.addSong(song, 'local', ip, username);
+        
         if (ret === 0){
             if (playlist.list.length === 1){
                 playlist.play();

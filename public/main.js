@@ -1,6 +1,17 @@
 "use strict";
 
 $(function(){
+    var username = localStorage.getItem("username");
+    
+    if (username == null) {
+        var name = '';
+        while (name.trim().length < 3) {
+            name = prompt("Please enter your name");
+        }
+        username = name;
+        localStorage.setItem("username", username);
+    }
+
     var socket = io.connect();
     var serverLastSeenOn = 0;
     
@@ -46,7 +57,9 @@ $(function(){
             for (var i = 0; i < playlist.length; i++){
                 var song = playlist[i];
                 var text = '<span class="path">' + song.path + '</span> - '
-                            + '<span class="ip">' + song.addedByIP + '</span>';
+                            + '<span class="ip">' + song.addedByIP 
+                            + '(' + song.username + ')'
+                            + '</span>';
                 var li = $("<li>").html(text).appendTo("#playlist");
                 $("<button>").text("Remove").click(function(songIndex) {
                     return function() {
@@ -72,7 +85,10 @@ $(function(){
                 (function(song){
                     var li = $("<li>").appendTo("#medialist");
                     $("<span>").text(medialist[i]).click(function(){
-                        socket.emit('song selected', song);
+                        socket.emit('song selected', {
+                            song: song,
+                            username: username
+                        });
                     }).appendTo(li);
                 })(medialist[i]);
             }

@@ -41,7 +41,7 @@ Playlist.prototype.getSongCountByIP = function(IP) {
  * time(seconds) remaining before next songs can be added by the same IP.
  */
 
-Playlist.prototype.addSong = function(path, type, IP){
+Playlist.prototype.addSong = function(path, type, IP, username){
     var lastSongByIP = this.getLastSongAddedByIP(IP);
     var songCountByIP = this.getSongCountByIP(IP);
     var song = new Song({
@@ -49,6 +49,7 @@ Playlist.prototype.addSong = function(path, type, IP){
         type: type, 
         addedOn: new Date,
         addedByIP: IP,
+        username: username
     });
     if (lastSongByIP === null){
         this.list.push(song);

@@ -5,6 +5,7 @@ function Song(args){
     this.type = args.type;
     this.addedOn = args.addedOn;
     this.addedByIP = args.addedByIP;
+    this.username = args.username;
 }
 
 module.exports = Song;
