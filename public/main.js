@@ -34,6 +34,11 @@ $(function(){
                         removeSong(songIndex);
                     };
                 }(i)).appendTo(li);
+                
+                if (song.addedByIP === "127.0.0.1") {
+                    li.addClass("addedByServer");
+                    li.children(".ip").text("yolin");
+                }
             }
         }
     }

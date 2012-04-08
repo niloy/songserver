@@ -32,6 +32,10 @@ h1{
     color: green;
 }
 
+#playlist .addedByServer .ip {
+    color: orange;
+}
+
 #playlist .date{
     color: blue;
 }
