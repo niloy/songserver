@@ -2,6 +2,7 @@
 
 $(function(){
     var socket = io.connect();
+    var serverLastSeenOn = 0;
     
     socket.on('init', function(data){
         var medialist = data.medialist;
@@ -17,6 +18,24 @@ $(function(){
     
     socket.on('message', function(message) {
         alert(message);
+    });
+    
+    var serverTimeoutCheck;
+    socket.on('server stats', function(stats) {
+        serverLastSeenOn = new Date();
+        
+        clearTimeout(serverTimeoutCheck);
+        $("#serverStatus").addClass("online");
+        $("#totalConnectedUsers").text(stats.totalConnectedUsers);
+        $("#totalSongs").text(stats.totalSongs);
+        
+        serverTimeoutCheck = setTimeout(function() {
+            var now = new Date();
+            
+            if ((now - serverLastSeenOn) > 2000) {
+                $("#serverStatus").removeClass("online");
+            }
+        }, 2000);
     });
     
     function updatePlaylist(playlist){

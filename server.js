@@ -75,9 +75,28 @@ requires too much effort, I am too lazy, this works!');
     });
 });
 
+// Send server stats
+setInterval(function() {
+    websock.sockets.in('users').emit('server stats', {
+        totalConnectedUsers: countTotalUsers(),
+        totalSongs: medialist.list.length
+    });
+}, 2000);
+
 playlist.onCurrentSongComplete = function(){
     websock.sockets.in('users').emit('playlist updated', playlist.list);
 };
+
+function countTotalUsers() {
+    var count = 0;
+    var users = websock.sockets.in('users').manager.connected;
+    
+    for (var u in users) {
+        count++;
+    }
+    
+    return count;
+}
 
 console.log('Server started on port: ' + PORT);
 

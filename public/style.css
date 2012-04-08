@@ -79,3 +79,13 @@ form legend{
     float: right;
 }
 
+#serverStatus::after {
+    content: 'Offline';
+    color: red;
+}
+
+#serverStatus.online::after {
+    content: 'Online';
+    color: green;
+}
+
