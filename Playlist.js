@@ -1,10 +1,11 @@
 "use strict";
 
 var Song = require('./Song.js');
+var config = require('./config.js');
 
 function Playlist(){
-    this.songSelectionGap = 30; // minimum time(seconds) user must wait before queuing next song
-    this.maxSongLimitPerIP = 2; // maximum songs a user can queue in playlist
+    this.songSelectionGap = config.songSelectionGap;
+    this.maxSongLimitPerIP = config.maxSongLimitPerIP;
     this.list = [];
     this.isPlaying = false;
     this.currentlyPlaying = null;
@@ -55,9 +56,9 @@ Playlist.prototype.addSong = function(path, type, IP){
         if (songCountByIP < this.maxSongLimitPerIP) {
             var timeDiff = Math.floor((Date.now() - lastSongByIP.addedOn) / 1000);
             
-            if (timeDiff > this.songSelectionGap){
-                    this.list.push(song);
-            }else{
+            if (timeDiff > this.songSelectionGap) {
+                this.list.push(song);
+            } else {
                 return {
                     type: "secondsTillNextSong",
                     time: this.songSelectionGap - timeDiff
