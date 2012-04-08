@@ -40,15 +40,24 @@ websock.sockets.on('connection', function(socket){
     });
 
     socket.on('song selected', function(song){
-        var time = playlist.addSong(song, 'local', socket.handshake.address.address);
-        if (time === 0){
+        var ret = playlist.addSong(song, 'local', socket.handshake.address.address);
+        if (ret === 0){
             if (playlist.list.length === 1){
                 playlist.play();
             }
-            socket.broadcast.emit('playlist updated', playlist.list);
-            socket.emit('playlist updated', playlist.list);
+            
+            websock.sockets.in('users').emit('playlist updated', playlist.list);
         }else{
-            socket.emit('wait for song add', time);
+            switch (ret.type) {
+                case 'secondsTillNextSong':
+                    socket.emit('message', 'Whao, Dont SPAM! Please wait ' 
+                        + ret.time + ' seconds before adding next song');
+                    break;
+                case 'maxSongLimitPerIP':
+                    socket.emit('message', 'You already got ' + ret.count
+                        + ' songs queued, give others a chance!');
+                    break;
+            }
         }
     });
     

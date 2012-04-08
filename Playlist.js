@@ -4,6 +4,7 @@ var Song = require('./Song.js');
 
 function Playlist(){
     this.songSelectionGap = 30; // minimum time(seconds) user must wait before queuing next song
+    this.maxSongLimitPerIP = 2; // maximum songs a user can queue in playlist
     this.list = [];
     this.isPlaying = false;
     this.currentlyPlaying = null;
@@ -22,14 +23,26 @@ Playlist.prototype.getLastSongAddedByIP = function(IP){
     return entry;
 };
 
+Playlist.prototype.getSongCountByIP = function(IP) {
+    var count = 0;
+    
+    this.list.forEach(function(song) {
+        if (song.addedByIP === IP) {
+            count++;
+        }
+    });
+    
+    return count;
+};
+
 /**
  * Returns 0 if song was added to playlist, else a non zero number to indicate
  * time(seconds) remaining before next songs can be added by the same IP.
  */
 
 Playlist.prototype.addSong = function(path, type, IP){
-    var secondsToAddNextSong;
     var lastSongByIP = this.getLastSongAddedByIP(IP);
+    var songCountByIP = this.getSongCountByIP(IP);
     var song = new Song({
         path: path,
         type: type, 
@@ -38,17 +51,27 @@ Playlist.prototype.addSong = function(path, type, IP){
     });
     if (lastSongByIP === null){
         this.list.push(song);
-        secondsToAddNextSong = 0;
     }else{
-        var timeDiff = Math.floor((Date.now() - lastSongByIP.addedOn) / 1000);
-        if (timeDiff > this.songSelectionGap){
-            this.list.push(song);
-            secondsToAddNextSong = 0;
-        }else{
-            secondsToAddNextSong = this.songSelectionGap - timeDiff;
+        if (songCountByIP < this.maxSongLimitPerIP) {
+            var timeDiff = Math.floor((Date.now() - lastSongByIP.addedOn) / 1000);
+            
+            if (timeDiff > this.songSelectionGap){
+                    this.list.push(song);
+            }else{
+                return {
+                    type: "secondsTillNextSong",
+                    time: this.songSelectionGap - timeDiff
+                };
+            }
+        } else {
+            return {
+                type: "maxSongLimitPerIP",
+                count: this.maxSongLimitPerIP
+            };
         }
     }
-    return secondsToAddNextSong;
+    
+    return 0;
 };
 
 Playlist.prototype.getCurrentSong = function(){

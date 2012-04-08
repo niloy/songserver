@@ -15,10 +15,6 @@ $(function(){
     
     socket.on('medialist updated', updateMedialist);
     
-    socket.on('wait for song add', function(time){
-        alert('Please wait ' + time + ' seconds before adding next song');
-    });
-    
     socket.on('message', function(message) {
         alert(message);
     });
