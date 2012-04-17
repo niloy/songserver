@@ -58,7 +58,7 @@ $(function(){
                 var song = playlist[i];
                 var text = '<span class="path">' + song.path + '</span> - '
                             + '<span class="ip">' + song.addedByIP 
-                            + '(' + song.username + ')'
+                            + '(' + song.username.replace("<", "&lt;") + ')'
                             + '</span>';
                 var li = $("<li>").html(text).appendTo("#playlist");
                 $("<button>").text("Remove").click(function(songIndex) {
