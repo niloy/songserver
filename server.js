@@ -13,12 +13,16 @@ var PORT = 8085;
 var server = http.createServer(function(request, response){
     if (request.url === '/upload'){
         var form = new formidable.IncomingForm();
-        form.parse(request, function(err, fields, files){
-            medialist.saveMedia(files, function(){
-                websock.sockets.in('users').emit('medialist updated', medialist.list);
+        try {
+            form.parse(request, function(err, fields, files){
+                medialist.saveMedia(files, function(){
+                    websock.sockets.in('users').emit('medialist updated', medialist.list);
+                });
+                response.end('ok');
             });
-            response.end('ok');
-        });
+        } catch(ex) {
+            console.log(ex);
+        }
     }else{
         request.addListener('end', function(){
             fileServer.serve(request, response);
