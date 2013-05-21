@@ -3,7 +3,7 @@ Song Server
 Steps to get it running:
 1. Download the source code.
 2. Hook up speakers to the computer.
-3. On the command-line, type 'node server.js'.
+3. On the command-line, go to songserver folder and type 'node server.js'.
 4. Open web browser and type http://localhost:8085 and start playing songs.
 
 The point of this server is to get it running on internal LAN and distribute the web link to everyone on LAN. That will allow people to start queueing songs to be played via central speakers.
