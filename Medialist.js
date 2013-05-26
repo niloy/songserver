@@ -2,8 +2,8 @@
 
 var fs = require('fs');
 
-function Medialist(){
-    this.baseDir = __dirname + '/media/';
+function Medialist(mediaDir){
+    this.baseDir = __dirname + mediaDir;
     this.list = fs.readdirSync(this.baseDir);
 }
 
@@ -31,4 +31,6 @@ Medialist.prototype.saveMedia = function(files, callback){
     }
 };
 
-module.exports = new Medialist;
+module.exports = function(mediaDir){
+    return new Medialist(mediaDir);
+};

@@ -4,14 +4,32 @@ var http = require('http');
 var staticServer = require('node-static');
 var socketio = require('socket.io');
 var playlist = require('./Playlist.js');
-var medialist = require('./Medialist.js');
+
 var formidable = require('formidable');
 
 var fileServer = new staticServer.Server(__dirname + '/public');
 var PORT = 8085;
+var mediaFolder = "/media/";
 
-var server = http.createServer(function(request, response){
-    if (request.url === '/upload'){
+var argv = require('optimist')
+    .usage('Start the Song Server.\nUsage: $0')
+    .alias('p', 'port')
+    .describe('p', 'Port to start server on')
+    .alias('m', 'media')
+    .describe('m', 'The media folder(where songs will be stored) ex : -m "/media"')
+    .argv
+;
+
+/* Setting Defaults */
+
+PORT = argv.port || PORT;
+mediaFolder = argv.media || mediaFolder;
+
+var medialist = require('./Medialist.js')(mediaFolder);
+
+
+var server = http.createServer(function(request, response) {
+    if (request.url === '/upload') {
         var form = new formidable.IncomingForm();
         try {
             form.parse(request, function(err, fields, files){
@@ -24,18 +42,16 @@ var server = http.createServer(function(request, response){
             console.log(ex);
         }
     }else{
-        request.addListener('end', function(){
-            fileServer.serve(request, response);
-        });
+        fileServer.serve(request, response);
     }
 });
 server.listen(PORT);
 
 var websock = socketio.listen(server);
-websock.configure(function(){
+websock.configure(function() {
     websock.disable('log');
 });
-websock.sockets.on('connection', function(socket){
+websock.sockets.on('connection', function(socket) {
     socket.join('users');
 
     socket.emit('init', {
@@ -44,6 +60,7 @@ websock.sockets.on('connection', function(socket){
     });
 
     socket.on('song selected', function(data){
+        
         var song = data.song;
         var username = data.username;
         var ip = socket.handshake.address.address;

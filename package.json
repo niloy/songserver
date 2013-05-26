@@ -1,0 +1,24 @@
+{
+  "name": "songserver-enhanced",
+  "version": "0.0.1",
+  "description": "ERROR: No README.md file found!",
+  "main": "server.js",
+  "dependencies": {
+    "formidable": "https://registry.npmjs.org/formidable/-/formidable-1.0.14.tgz",
+    "node-static": "~0.6.9",
+    "socket.io": "~0.9.14",
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shreyasubale/songserver-enhanced.git"
+  },
+  "author": "Shreyas Ubale",
+  "license": "BSD",
+  "gitHead": "8f8719110c45e9701bbf8e03e5935bfac4de7781",
+  "readmeFilename": "README"
+}
